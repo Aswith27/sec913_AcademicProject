@@ -1,2 +1,2 @@
 "# Subscription_Management" 
-Live Frontend: https://your-project.vercel.app
+sec913-academic-project-gt0zl084n-aswith27s-projects.vercel.app
