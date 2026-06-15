@@ -12,6 +12,7 @@ function SubscriptionsPage({
   userSnapshots,
   users,
   onBillingChange,
+  onDeleteSubscription,
   onFilterChange,
   onPlanChange,
   onPlanSelection,
@@ -30,6 +31,7 @@ function SubscriptionsPage({
             <h2>{isAdmin ? 'Assign a plan to a user' : 'Subscribe to a plan'}</h2>
           </div>
         </div>
+
         <form className="form-stack" onSubmit={onSubscribe}>
           <label>
             User
@@ -39,6 +41,7 @@ function SubscriptionsPage({
               onChange={(event) => onUserSelection(Number(event.target.value))}
             >
               {users.length === 0 ? <option value="">No users available</option> : null}
+
               {users.map((user) => (
                 <option value={user.id} key={user.id}>
                   {user.name} - {user.company}
@@ -46,6 +49,7 @@ function SubscriptionsPage({
               ))}
             </select>
           </label>
+
           <label>
             Plan
             <select
@@ -54,6 +58,7 @@ function SubscriptionsPage({
               onChange={(event) => onPlanSelection(Number(event.target.value))}
             >
               {plans.length === 0 ? <option value="">No plans available</option> : null}
+
               {plans.map((plan) => (
                 <option value={plan.id} key={plan.id}>
                   {plan.name} - {formatMoney(plan.monthly_price)}/mo
@@ -61,6 +66,7 @@ function SubscriptionsPage({
               ))}
             </select>
           </label>
+
           <label>
             Billing cycle
             <select value={selectedBilling} onChange={(event) => onBillingChange(event.target.value)}>
@@ -68,10 +74,19 @@ function SubscriptionsPage({
               <option value="yearly">Yearly</option>
             </select>
           </label>
+
           {!canCreateSubscription ? (
-            <p className="help-text">Create a plan on the Plans page first. New users can be added from the sign-up screen.</p>
+            <p className="help-text">
+              Create a plan on the Plans page first. New users can be added from the sign-up screen.
+            </p>
           ) : null}
-          {!isAdmin ? <p className="help-text">You can subscribe plans for your own account. Admins can assign subscriptions for any user.</p> : null}
+
+          {!isAdmin ? (
+            <p className="help-text">
+              You can subscribe plans for your own account. Admins can assign subscriptions for any user.
+            </p>
+          ) : null}
+
           <button type="submit" disabled={!canCreateSubscription}>
             {isAdmin ? 'Create subscription' : 'Subscribe now'}
           </button>
@@ -85,6 +100,7 @@ function SubscriptionsPage({
             <h2>Filter by lifecycle state</h2>
           </div>
         </div>
+
         <div className="toggle-row">
           <button
             type="button"
@@ -93,6 +109,7 @@ function SubscriptionsPage({
           >
             All
           </button>
+
           {statusCounts.map((item) => (
             <button
               key={item.status}
@@ -112,8 +129,10 @@ function SubscriptionsPage({
             <p className="eyebrow">Subscription roster</p>
             <h2>Act on live customer plans</h2>
           </div>
+
           <div className="topbar-chip">{filteredSubscriptions.length} shown</div>
         </div>
+
         {filteredSubscriptions.length > 0 ? (
           <div className="subscription-list">
             {filteredSubscriptions.map((subscription) => (
@@ -121,47 +140,92 @@ function SubscriptionsPage({
                 <div className="subscription-header">
                   <div>
                     <h3>{subscription.user.name}</h3>
-                    <p>{subscription.user.company} - {subscription.plan.name}</p>
+
+                    <p>
+                      {subscription.user.company} - {subscription.plan.name}
+                    </p>
                   </div>
-                  <span className={`status-pill ${subscription.status}`}>{sentenceCase(subscription.status)}</span>
+
+                  <span className={`status-pill ${subscription.status}`}>
+                    {sentenceCase(subscription.status)}
+                  </span>
                 </div>
+
                 <div className="subscription-meta">
                   <span>{subscription.billing_cycle}</span>
                   <span>Renews {formatDate(subscription.renews_on)}</span>
                   <span>{subscription.usage_health} usage</span>
-                  <span>{subscription.auto_renew ? 'Auto renew on' : 'Auto renew off'}</span>
+                  <span>
+                    {subscription.auto_renew ? 'Auto renew on' : 'Auto renew off'}
+                  </span>
                 </div>
+
                 {isAdmin ? (
                   <div className="action-row">
-                    <button type="button" onClick={() => onStatusChange(subscription.id, 'active')}>
+                    <button
+                      type="button"
+                      onClick={() => onStatusChange(subscription.id, 'active')}
+                    >
                       Activate
                     </button>
-                    <button type="button" onClick={() => onStatusChange(subscription.id, 'paused')}>
+
+                    <button
+                      type="button"
+                      onClick={() => onStatusChange(subscription.id, 'paused')}
+                    >
                       Pause
                     </button>
-                    <button type="button" onClick={() => onStatusChange(subscription.id, 'cancelled')}>
+
+                    <button
+                      type="button"
+                      onClick={() => onStatusChange(subscription.id, 'cancelled')}
+                    >
                       Cancel
                     </button>
+
                     <button
                       type="button"
                       disabled={plans.length < 2}
                       onClick={() => {
-                        const currentIndex = plans.findIndex((plan) => plan.id === subscription.plan.id)
-                        const nextPlan = plans[(currentIndex + 1) % plans.length]
-                        onPlanChange(subscription.id, nextPlan.id, subscription.billing_cycle)
+                        const currentIndex = plans.findIndex(
+                          (plan) => plan.id === subscription.plan.id
+                        )
+
+                        const nextPlan =
+                          plans[(currentIndex + 1) % plans.length]
+
+                        onPlanChange(
+                          subscription.id,
+                          nextPlan.id,
+                          subscription.billing_cycle
+                        )
                       }}
                     >
                       Move to next plan
                     </button>
+
+                    <button
+                      type="button"
+                      className="danger-button"
+                      onClick={() => onDeleteSubscription(subscription.id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 ) : (
-                  <p className="help-text">Lifecycle updates are managed by admins.</p>
+                  <p className="help-text">
+                    Lifecycle updates are managed by admins.
+                  </p>
                 )}
               </article>
             ))}
           </div>
         ) : (
-          <p className="empty-state">{isAdmin ? 'No subscriptions yet. Create one after adding a plan.' : 'No subscriptions are currently assigned to your account.'}</p>
+          <p className="empty-state">
+            {isAdmin
+              ? 'No subscriptions yet. Create one after adding a plan.'
+              : 'No subscriptions are currently assigned to your account.'}
+          </p>
         )}
       </article>
 
@@ -172,6 +236,7 @@ function SubscriptionsPage({
             <h2>User account coverage</h2>
           </div>
         </div>
+
         {userSnapshots.length > 0 ? (
           <div className="user-grid">
             {userSnapshots.map((user) => (
@@ -180,6 +245,7 @@ function SubscriptionsPage({
                   <strong>{user.name}</strong>
                   <p>{user.company}</p>
                 </div>
+
                 <div className="profile-stats">
                   <span>{user.totalSubscriptions} subs</span>
                   <span>{user.activeSubscriptions} active</span>
@@ -189,7 +255,11 @@ function SubscriptionsPage({
             ))}
           </div>
         ) : (
-          <p className="empty-state">{isAdmin ? 'No users are available yet. Create one from the sign-up screen.' : 'Your profile snapshot will appear here once subscription data is available.'}</p>
+          <p className="empty-state">
+            {isAdmin
+              ? 'No users are available yet. Create one from the sign-up screen.'
+              : 'Your profile snapshot will appear here once subscription data is available.'}
+          </p>
         )}
       </article>
     </section>

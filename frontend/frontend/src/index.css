@@ -1,25 +1,24 @@
 :root {
-  --bg: #f4f4f2;
-  --panel: rgba(255, 255, 255, 0.76);
-  --border: rgba(17, 17, 17, 0.08);
-  --text: #4b4b4f;
-  --text-soft: #6f6f73;
-  --text-strong: #111111;
+  --bg: #f8fafc;
+  --panel: rgba(255, 255, 255, 0.82);
+  --border: rgba(124, 58, 237, 0.12);
+
+  --text: #475569;
+  --text-soft: #64748b;
+  --text-strong: #0f172a;
+
+  --primary: #7c3aed;
+  --primary-dark: #6d28d9;
+
   --shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
-  --sans: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-  --heading: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+  --sans: "SF Pro Display", "SF Pro Text", -apple-system,
+    BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+  --heading: "SF Pro Display", "SF Pro Text", -apple-system,
+    BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
   --mono: "SF Mono", "Cascadia Code", Consolas, monospace;
-  font: 16px/1.5 var(--sans);
-  letter-spacing: -0.01em;
-  color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.04), transparent 24%),
-    linear-gradient(180deg, #fbfbfc 0%, #f2f2f4 100%);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
