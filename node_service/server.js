@@ -35,9 +35,7 @@ app.get("/logs", async (req, res) => {
     const logs = await Log.find();
     res.json(logs);
   } catch (err) {
-    res.status(500).json({
-      error: err.message,
-    });
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -53,9 +51,7 @@ app.post("/logs", async (req, res) => {
       data: log,
     });
   } catch (err) {
-    res.status(500).json({
-      error: err.message,
-    });
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -65,23 +61,6 @@ app.post("/test", (req, res) => {
     message: "POST works",
   });
 });
-
-mongoose.connect(
-  "mongodb://127.0.0.1:27017/subscription_management"
-);
-
-const LogSchema = new mongoose.Schema({
-  user: String,
-  action: String,
-  plan: String,
-  timestamp: String
-});
-
-const Log = mongoose.model(
-  "subscription_logs",
-  LogSchema
-);
-
 
 // Start Server
 app.listen(3001, () => {

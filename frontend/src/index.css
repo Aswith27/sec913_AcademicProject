@@ -1,0 +1,110 @@
+:root {
+  --bg: #f8fafc;
+  --panel: rgba(15, 23, 42, 0.8);
+  --border: rgba(124, 58, 237, 0.12);
+
+  --card-bg: rgba(30, 41, 59, 0.75);
+--card-border: rgba(255, 255, 255, 0.08);
+  --text: #475569;
+  --text-soft: #64748b;
+  --text-strong: #0f172a;
+
+  --primary: #7c3aed;
+  --primary-dark: #6d28d9;
+
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+
+  --sans: "SF Pro Display", "SF Pro Text", -apple-system,
+    BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+  --heading: "SF Pro Display", "SF Pro Text", -apple-system,
+    BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+  --mono: "SF Mono", "Cascadia Code", Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top right, #164e63, transparent 30%),
+    radial-gradient(circle at bottom left, #1e293b, transparent 40%),
+    #020617;
+
+  color: #e2e8f0;
+}
+
+#root {
+  width: min(1480px, 100%);
+  margin: 0 auto;
+  min-height: 100svh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--heading);
+  font-weight: 600;
+  color: #f8fafc; 
+
+}
+
+h1 {
+  font-size: 3.5rem;
+  line-height: 0.94;
+  letter-spacing: -0.06em;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+h3 {
+  font-size: 1.72rem;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+
+p {
+  margin: 0;
+}
+
+code {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 10px;
+  background: rgba(17, 17, 17, 0.06);
+  font-family: var(--mono);
+  color: var(--text-strong);
+  font-size: 0.9rem;
+}
+
+a {
+  color: inherit;
+}
+
+@media (max-width: 900px) {
+  :root {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 2.8rem;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+  }
+
+  h3 {
+    font-size: 1.45rem;
+  }
+}
